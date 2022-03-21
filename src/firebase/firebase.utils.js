@@ -2,14 +2,14 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-const config={
-    apiKey: "AIzaSyBc1JSY-RZTsKPXqd8txHF2zSGnu-0G3oc",
-    authDomain: "e-clothing-5.firebaseapp.com",
-    projectId: "e-clothing-5",
-    storageBucket: "e-clothing-5.appspot.com",
-    messagingSenderId: "1030927422726",
-    appId: "1:1030927422726:web:3f5e434b9d9b7cc1347a87",
-    measurementId: "G-BXDM5BVCHD"
+  const firebaseConfig = {
+    apiKey: "AIzaSyCNbhDd2dKOE3H2Sd0OaCiO_ogLmpd4MKk",
+    authDomain: "e-clothing-4d6c3.firebaseapp.com",
+    projectId: "e-clothing-4d6c3",
+    storageBucket: "e-clothing-4d6c3.appspot.com",
+    messagingSenderId: "211529294721",
+    appId: "1:211529294721:web:4bea3a2c6ec2dfebe07e80",
+    measurementId: "G-3J134RF44T"
   };
 
   export const createUserProfileDocument=async (userAuth, additionalData)=>{
@@ -35,7 +35,7 @@ const config={
     return userRef;
   }
 
-  firebase.initializeApp(config);
+  firebase.initializeApp(firebaseConfig);
 
 export const auth=firebase.auth();
 export const firestore=firebase.firestore();
