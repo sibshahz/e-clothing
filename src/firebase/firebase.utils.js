@@ -35,10 +35,52 @@ import 'firebase/auth';
     return userRef;
   }
 
+
+
   firebase.initializeApp(firebaseConfig);
 
+/* Creating a new instance of the firebase auth object. */
 export const auth=firebase.auth();
 export const firestore=firebase.firestore();
+
+/**
+ * The function takes in a collection name and an array of objects to add to the collection. 
+ * It creates a new document for each object in the array and adds the object to the batch. 
+ * Finally, it commits the batch to the database
+ * @param collectionKey - The name of the collection you want to add the documents to.
+ * @param objectsToAdd - an array of objects to add to the collection.
+ * @returns The batch.commit() method returns a Promise.
+ */
+export const addCollectionAndDocuments= async (collectionKey,objectsToAdd)=>{
+  const collectionRef=firestore.collection(collectionKey);
+  console.log("🚀 ~ file: firebase.utils.js ~ line 47 ~ addCollectionAndItems ~ collectionRef", collectionRef);
+  
+  const batch=firestore.batch();
+  objectsToAdd.forEach(obj =>{
+    const newDocRef=collectionRef.doc();
+    console.log("🚀 ~ file: firebase.utils.js ~ line 52 ~ addCollectionAndDocuments ~ newDocRef", newDocRef);
+    batch.set(newDocRef,obj);
+  });
+
+  return await batch.commit();
+};
+
+export const convertCollectionsSnapshotToMap=(collections)=>{
+  const transformedCollection=collections.docs.map(doc=>{
+    const {title, items}=doc.data();
+    return{
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+
+    }
+  });
+  return transformedCollection.reduce((accumulator,collection)=>{
+    accumulator[collection.title.toLowerCase()]=collection;
+    return accumulator;
+  },{});
+}
 
 const provider=new firebase.auth.GoogleAuthProvider();
 
