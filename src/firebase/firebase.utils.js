@@ -80,12 +80,21 @@ export const convertCollectionsSnapshotToMap=(collections)=>{
     accumulator[collection.title.toLowerCase()]=collection;
     return accumulator;
   },{});
+};
+
+export const getCurrentUser=()=>{
+  return new Promise((resolve,reject)=>{
+    const unsubscribe=auth.onAuthStateChanged(userAuth=>{
+      unsubscribe();
+      resolve(userAuth);
+    },reject);
+  });
 }
 
-const provider=new firebase.auth.GoogleAuthProvider();
+export const googleProvider=new firebase.auth.GoogleAuthProvider();
 
-provider.setCustomParameters({prompt: 'select_account'});
+googleProvider.setCustomParameters({prompt: 'select_account'});
 
-export const signInWithGoogle=()=> auth.signInWithPopup(provider);
+export const signInWithGoogle=()=> auth.signInWithPopup(googleProvider);
 
 export default firebase;
